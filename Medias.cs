@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutomatizarPruebasUnitarias {
+namespace AutomatizarPruebasUnitarias
+{
     
-    class Medias {
+    class Medias
+    {
 
         /**
          * Calcula y regresa la media artimética
