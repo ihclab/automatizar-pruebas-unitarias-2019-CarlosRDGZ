@@ -1,23 +1,25 @@
 #include <iostream>
-#include <fstream>
+#include <vector>
 #include <string>
 #include "Medias.h"
+#include "TestReader.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    string line = "";
-    ifstream* file = new ifstream("CasosPrueba.txt");
-
-    if (file->is_open())
+    TestReader *reader = new TestReader("CasosPrueba.txt");
+    reader->parse();
+    vector< vector<string>* >* test = reader->getTests();
+    
+    for(int i = 0; i < test->size(); i++)
     {
-        while(getline(*file, line))
-        {
-            cout << line << endl;
-        }
+        for(int j = 0; j < test->at(i)->size(); j++)
+            cout << test->at(i)->at(j) << " ";
+        cout << endl;
     }
 
-    file->close();
+    delete reader;
+    delete test;
 
     return 0;
 }
