@@ -30,7 +30,7 @@ double Medias::mediaArmonica(int length, ...)
     va_start(values, length);
 
     double x = 0;
-    for(int i = 0; i < length; i++) { x += (1 / va_arg(values, double)); }
+    for(int i = 0; i < length; i++) { x += (1.0 / va_arg(values, double)); }
     va_end(values);
     
     return length / x;

@@ -11,6 +11,12 @@ TestReader::TestReader(std::string path)
     this->tests = NULL;
 }
 
+TestReader::~TestReader()
+{
+    delete this->file;
+    delete this->tests;
+}
+
 void TestReader::parse()
 {
     if (NULL == this->file)
