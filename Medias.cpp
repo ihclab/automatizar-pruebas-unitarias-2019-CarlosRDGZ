@@ -1,4 +1,3 @@
-#include <cstdarg>
 #include <cmath>
 #include "Medias.h"
 
@@ -11,41 +10,25 @@ double Medias::raizEnesima(double x, int n)
 
 // public
 // Usa raizEnesima para calcular y regresar la media geométrica
-double Medias::mediaGeometrica(int length, ...)
+double Medias::mediaGeometrica(int length, double* vals)
 {
-    va_list values;
-    va_start(values, length);
-
-    double x = 1;
-    for(int i = 0; i < length; i++) { x *= va_arg(values, double); }
-    va_end(values);
-    
-    return raizEnesima(x, length);
+    for(int i = 1; i < length; i++) { vals[0] *= vals[i]; }   
+    return raizEnesima(vals[0], length);
 }
 
 // public
-double Medias::mediaArmonica(int length, ...)
+double Medias::mediaArmonica(int length, double* vals)
 {
-    va_list values;
-    va_start(values, length);
-
     double x = 0;
-    for(int i = 0; i < length; i++) { x += (1.0 / va_arg(values, double)); }
-    va_end(values);
+    for(int i = 0; i < length; i++) { x += (1.0 / vals[i]); }
     
     return length / x;
 }
 
 // public
 // Calcula y regresa la media artimética
-double Medias::mediaAritmetica(int length, ...)
+double Medias::mediaAritmetica(int length, double* vals)
 {
-    va_list values;
-    va_start(values, length);
-
-    double x = 0;
-    for(int i = 0; i < length; i++) { x += va_arg(values, double); }
-    va_end(values);
-    
-    return x / length;
+    for(int i = 1; i < length; i++) { vals[0] += vals[i]; }   
+    return vals[0] / length;
 }

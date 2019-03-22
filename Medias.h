@@ -6,9 +6,9 @@ class Medias
 private:
     static double raizEnesima(double x, int n);
 public:
-    double mediaGeometrica(int length, ...);
-    static double mediaArmonica(int length, ...);
-    static double mediaAritmetica(int length, ...);
+    double mediaGeometrica(int length, double* vals);
+    static double mediaArmonica(int length, double* vals);
+    static double mediaAritmetica(int length, double* vals);
 };
 
 #endif

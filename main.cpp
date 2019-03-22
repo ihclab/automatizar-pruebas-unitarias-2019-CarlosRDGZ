@@ -12,13 +12,13 @@ int main(int argc, char const *argv[])
     reader->parse();
 
     regex isString("[a-zA-Z]+");
-    vector< vector<string>* >* test = reader->getTests();
-    
-    for(int i = 0; i < test->size(); i++)
+    vector< vector<string>* >* tests = reader->getTests();
+    for(int i = 0, iLength = tests->size(); i < iLength; i++)
     {
-        for(int j = 0; j < test->at(i)->size(); j++)
+        vector<string>* test = tests->at(i);
+        for(int j = 0, jLength = test->size(); j < jLength; j++)
         {
-            string str = test->at(i)->at(j);
+            string str = test->at(j);
             cout << str << " ";
             cout << (
                 (regex_match(str, isString) == true) ? 
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     }
 
     delete reader;
-    delete test;
+    delete tests;
 
     return 0;
 }

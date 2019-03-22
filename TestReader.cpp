@@ -1,7 +1,5 @@
-#include <string>
 #include <sstream>
 #include <fstream>
-#include <vector>
 #include "TestReader.h"
 
 TestReader::TestReader(std::string path)
@@ -39,8 +37,6 @@ void TestReader::parse()
             }
             
             this->file->close();
-            delete line;
-            
         }
         this->file->close();
     }
