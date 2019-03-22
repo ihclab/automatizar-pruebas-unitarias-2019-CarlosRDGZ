@@ -12,11 +12,7 @@ int main(int argc, char const *argv[])
     reader->parse();
 
     regex isString("[a-zA-Z]+");
-    regex isVector("\\s+");
     vector< vector<string>* >* test = reader->getTests();
-    
-    cout << (regex_match(" a", isVector) ? "true" : "false") << endl << endl;
-    return 0;
     
     for(int i = 0; i < test->size(); i++)
     {
@@ -24,7 +20,11 @@ int main(int argc, char const *argv[])
         {
             string str = test->at(i)->at(j);
             cout << str << " ";
-            cout << ((regex_match(str, isString) == true) ? "string" : (regex_match(str, isVector) ? "vector" : "number")) << endl;
+            cout << (
+                (regex_match(str, isString) == true) ? 
+                    "string" : 
+                    (str.find(' ') != string::npos ? "vector" : "number"))
+                << endl;
         }
         cout << endl;
     }
