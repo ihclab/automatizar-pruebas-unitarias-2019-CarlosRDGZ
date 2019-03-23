@@ -1,36 +1,23 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <regex>
-#include "Medias.h"
-#include "TestReader.h"
+#include "Tester.h"
+#include "TestCaseReader.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    TestReader *reader = new TestReader("CasosPrueba.txt");
+    vector< vector<string>* >* cases;
+    TestCaseReader *reader = new TestCaseReader("CasosPrueba.txt");
+
     reader->parse();
+    cases = reader->getCases();
 
-    regex isString("[a-zA-Z]+");
-    vector< vector<string>* >* tests = reader->getTests();
-    for(int i = 0, iLength = tests->size(); i < iLength; i++)
+
+    for (int i = 0, iLength = cases->size(); i < iLength; i++)
     {
-        vector<string>* test = tests->at(i);
-        for(int j = 0, jLength = test->size(); j < jLength; j++)
-        {
-            string str = test->at(j);
-            cout << str << " ";
-            cout << (
-                (regex_match(str, isString) == true) ? 
-                    "string" : 
-                    (str.find(' ') != string::npos ? "vector" : "number"))
-                << endl;
-        }
-        cout << endl;
+        vector<string>* c = cases->at(i);
+        cout << c->at(0) << ": " << Tester::test(c->at(1), split(c->at(2), ' '), c->at(3)) << endl;
     }
-
-    delete reader;
-    delete tests;
-
     return 0;
 }
