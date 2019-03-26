@@ -13,7 +13,7 @@ double cast(string input);
 vector<double>* cast(vector<string>* input);
 void printTestResult(string id, bool result, int &var);
 
-int main(int argc, char const *argv[])
+int main()
 {
     bool result;
     int passed = 0, failed = 0;
