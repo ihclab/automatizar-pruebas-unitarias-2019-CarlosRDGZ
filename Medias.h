@@ -6,9 +6,9 @@ class Medias
 private:
     static double raizEnesima(double x, int n);
 public:
-    double mediaGeometrica(int length, double* vals);
-    static double mediaArmonica(int length, double* vals);
-    static double mediaAritmetica(int length, double* vals);
+    double mediaGeometrica(std::vector<double>* vals);
+    static double mediaArmonica(std::vector<double>* vals);
+    static double mediaAritmetica(std::vector<double>* vals);
 };
 
 #endif

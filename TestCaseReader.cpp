@@ -55,7 +55,7 @@ std::vector<std::string>* split(std::istream& stream, char delim = '\n')
         lines->push_back(str);
     }
 
-    return lines;
+    return (str.compare("") == 0 ? NULL : lines);
 }
 
 std::vector<std::string>* split(std::string str, char delim = '\n')

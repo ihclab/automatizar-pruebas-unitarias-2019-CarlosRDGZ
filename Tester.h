@@ -5,12 +5,13 @@
 #include <vector>
 
 class Tester
-{
+{    
 private:
-    static double cast(std::string input);
-    static double* cast(std::vector<std::string>* input);
+    template<typename N>
+    static N truncate(N number, int digits = 0);
 public:
-    static bool test(std::string method, std::vector<std::string>* input, std::string output);
+    template<class F, class P, class O>
+    static bool testEqual(F function, P params, O expectedOutput);
 };
 
 #endif
