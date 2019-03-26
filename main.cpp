@@ -1,5 +1,6 @@
 #include <cmath>
 #include <chrono>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <regex>
@@ -14,10 +15,12 @@ using namespace std;
 
 double cast(string input);
 vector<double>* cast(vector<string>* input);
-void printTestResult(string id, bool result, double elapsedTime, int &var);
-void printResume(int passed, int failed, int total);
+void printResume(int passed, int failed, int total, ofstream &file);
+void printTestResult(string id, bool result, double elapsedTime, ofstream &file, int &var);
 template<class F>
 bool callTest(F function, string params, string result, double &elapsedTime);
+
+ofstream resultFile;
 
 int main()
 {
@@ -29,6 +32,7 @@ int main()
 
     reader->parse();
     cases = reader->getCases();
+    resultFile.open("Result.txt");
 
     for (int i = 0, iLength = cases->size(); i < iLength; i++)
     {
@@ -45,22 +49,22 @@ int main()
             else
             {
                 if (c->at(3).compare("Exception"))
-                    printTestResult(c->at(0), true, elapsedTime, passed);
+                    printTestResult(c->at(0), true, elapsedTime, resultFile, passed);
                 else
-                    printTestResult(c->at(0), false, elapsedTime, failed);
+                    printTestResult(c->at(0), false, elapsedTime, resultFile, failed);
                 continue;
             }
-            printTestResult(c->at(0), result, elapsedTime, (result ? passed : failed));
+            printTestResult(c->at(0), result, elapsedTime, resultFile, (result ? passed : failed));
         }
         catch (const string ex)
         {
             if (ex.compare("Exception") == 0)
-                printTestResult(c->at(0), true, elapsedTime, passed);
+                printTestResult(c->at(0), true, elapsedTime, resultFile, passed);
             else
-                printTestResult(c->at(0), false, elapsedTime, failed);
+                printTestResult(c->at(0), false, elapsedTime, resultFile, failed);
         }
     }
-    printResume(passed, failed, cases->size());
+    printResume(passed, failed, cases->size(), resultFile);
     return 0;
 }
 
@@ -95,7 +99,7 @@ vector<double>* cast(vector<string>* input)
     return values;
 }
 
-void printTestResult(string id, bool result, double elapsedTime, int &var)
+void printTestResult(string id, bool result, double elapsedTime, ofstream &file, int &var)
 {
     HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
     if (result)
@@ -103,17 +107,21 @@ void printTestResult(string id, bool result, double elapsedTime, int &var)
     else
         SetConsoleTextAttribute(color, 12); // Red
     
-    cout << id << ": " << (result ? "Success. " : "Fail.    ");
+    string res = id + ": " + (result ? "Success. " : "Fail.    ");
+    cout << res;
+    file << res;
     SetConsoleTextAttribute(color, 7); // White
     cout << "Elapsed Time: " << fixed << elapsedTime << setprecision(5) << " milliseconds." << endl;
+    file << "Elapsed Time: " << fixed << elapsedTime << setprecision(5) << " milliseconds." << endl;
     var++;
 }
 
-void printResume(int passed, int failed, int total)
+void printResume(int passed, int failed, int total, ofstream &file)
 {
     HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(color, 7);
     cout << "\nTotal Test: " << total << ". " << "Passed: " << passed << ". " << "Failed: " << failed << "." << endl;
+    file << "\nTotal Test: " << total << ". " << "Passed: " << passed << ". " << "Failed: " << failed << "." << endl;
 }
 
 template<class F>
