@@ -3,6 +3,7 @@
 #include <regex>
 #include <string>
 #include <vector>
+#include <Windows.h>
 #include "Medias.h"
 #include "MethodsMedias.h"
 #include "Tester.1.h"
@@ -12,6 +13,7 @@ using namespace std;
 double cast(string input);
 vector<double>* cast(vector<string>* input);
 void printTestResult(string id, bool result, int &var);
+void printResume(int passed, int failed, int total);
 
 int main()
 {
@@ -53,8 +55,7 @@ int main()
                 printTestResult(c->at(0), false, failed);
         }
     }
-
-    cout << "\nTotal Test: " << cases->size() << ". Passed: " << passed << ". Failed: " << failed << "." << endl;
+    printResume(passed, failed, cases->size());
     return 0;
 }
 
@@ -91,6 +92,19 @@ vector<double>* cast(vector<string>* input)
 
 void printTestResult(string id, bool result, int &var)
 {
+    HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (result)
+        SetConsoleTextAttribute(color, 10); // Green
+    else
+        SetConsoleTextAttribute(color, 12); // Red
+    
     cout << id << ": " << (result ? "Success" : "Fail") << endl;
     var++;
+}
+
+void printResume(int passed, int failed, int total)
+{
+    HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(color, 7);
+    cout << "\nTotal Test: " << total << ". " << "Passed: " << passed << ". " << "Failed: " << failed << "." << endl;
 }
